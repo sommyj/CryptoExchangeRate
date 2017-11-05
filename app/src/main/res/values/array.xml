@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="country_currency_array">
+        <item>NGN</item>
+        <item>USD</item>
+        <item>CAD</item>
+        <item>CNH</item>
+        <item>GBP</item>
+        <item>JPY</item>
+        <item>EUR</item>
+        <item>AUD</item>
+        <item>NZD</item>
+        <item>KES</item>
+        <item>MXN</item>
+        <item>ZAR</item>
+        <item>RUB</item>
+        <item>MYR</item>
+        <item>SEK</item>
+        <item>HKD</item>
+        <item>BRL</item>
+        <item>GHS</item>
+        <item>KRW</item>
+        <item>INR</item>
+    </string-array>
+</resources>
