@@ -5,6 +5,8 @@
         Failed to get results. Please try again.
     </string>
     <string name="crypto_currency">Crypto currency</string>
+    <string name="crypto_currency_image">Crypto Currency image</string>
+    <string name="next_sign">Next Sign</string>
     
     <string name="foreign_label">Please enter a foreign currency amount</string>
     <string name="crypto_label">Please enter a crypto currency amount</string>

@@ -31,7 +31,7 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
     private String cryptoCurrencySymbol;
     private String foreignCurrencySymbol;
 
-    private int whoHasFocus= 0;
+    private int whoHasFocus = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
 
         Intent intentThatStartedThisActivity = getIntent();
 
-        if(intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)){
+        if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
             String[] strings = intentThatStartedThisActivity.getStringArrayExtra(Intent.EXTRA_TEXT);
 
             bthForeignCurrencyString = strings[0];
@@ -66,17 +66,17 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
             foreignCurrencySymbol = strings[3];
             mCryptoCurrencySymbolTextView.setText(cryptoCurrencySymbol);
             mCryptoCurrencyEditText.setHint(R.string.crypto_default_Text);
-            mCryptoAmountTextView.setText(cryptoCurrencySymbol+" "+"1.00");
+            mCryptoAmountTextView.setText(cryptoCurrencySymbol + " " + "1.00");
             mForeignCurrencySymbolTextView.setText(foreignCurrencySymbol);
-            mForeignAmountTextView.setText(foreignCurrencySymbol+" "+bthForeignCurrencyString);
+            mForeignAmountTextView.setText(foreignCurrencySymbol + " " + bthForeignCurrencyString);
             mForeignCurrencyEditText.setHint(bthForeignCurrencyString);
         }
 
 //        getActionBar().setIcon(cryptoCurrencyImage);
 
-            mForeignCurrencyEditText.setOnFocusChangeListener(this);
-            mForeignCurrencyEditText.addTextChangedListener(this);
-            mCryptoCurrencyEditText.addTextChangedListener(this);
+        mForeignCurrencyEditText.setOnFocusChangeListener(this);
+        mForeignCurrencyEditText.addTextChangedListener(this);
+        mCryptoCurrencyEditText.addTextChangedListener(this);
     }
 
     @Override
@@ -97,43 +97,43 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
         DecimalFormat decimalFormat = new DecimalFormat("#.####");
         decimalFormat.setRoundingMode(RoundingMode.FLOOR);
 
-        if(mForeignCurrencyEditText.getEditableText() == editable) {
+        if (mForeignCurrencyEditText.getEditableText() == editable) {
 
             try {
                 foreignAmount = Double.parseDouble(mForeignCurrencyEditText.getText().toString());
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException ignored) {
+                ignored.printStackTrace();
             }
 
             double calculatedCryptoAmount = foreignAmount / bthForeignCurrencyString;
 
-            mCryptoCurrencyEditText.setHint(decimalFormat.format(calculatedCryptoAmount).toString());
-            mCryptoAmountTextView.setText(cryptoCurrencySymbol+" "+String.valueOf(decimalFormat.format(calculatedCryptoAmount)));
-            mForeignAmountTextView.setText(foreignCurrencySymbol+" "+decimalFormat.format(foreignAmount));
+            mCryptoCurrencyEditText.setHint(decimalFormat.format(calculatedCryptoAmount));
+            mCryptoAmountTextView.setText(cryptoCurrencySymbol + " " + String.valueOf(decimalFormat.format(calculatedCryptoAmount)));
+            mForeignAmountTextView.setText(foreignCurrencySymbol + " " + decimalFormat.format(foreignAmount));
             mForeignCurrencyEditText.setHint(foreignAmount.toString());
-        }
-
-        else if(mCryptoCurrencyEditText.getEditableText() == editable){
+        } else if (mCryptoCurrencyEditText.getEditableText() == editable) {
 
             try {
                 cryptoAmount = Double.parseDouble(mCryptoCurrencyEditText.getText().toString());
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException ignored) {
+                ignored.printStackTrace();
             }
 
             double calculatedForeignAmount = cryptoAmount * bthForeignCurrencyString;
 
             mForeignCurrencyEditText.setText("");
             mForeignCurrencyEditText.setHint(decimalFormat.format(calculatedForeignAmount));
-            mForeignAmountTextView.setText(foreignCurrencySymbol+" "+decimalFormat.format(calculatedForeignAmount));
-            mCryptoAmountTextView.setText(cryptoCurrencySymbol+" "+decimalFormat.format(cryptoAmount));
+            mForeignAmountTextView.setText(foreignCurrencySymbol + " " + decimalFormat.format(calculatedForeignAmount));
+            mCryptoAmountTextView.setText(cryptoCurrencySymbol + " " + decimalFormat.format(cryptoAmount));
         }
 
     }
 
     @Override
     public void onFocusChange(View view, boolean b) {
-        if(view.getId() == R.id.foriegn_EditText) {
-            if(!(mCryptoCurrencyEditText.getText().toString().equals("")) ){
-          mCryptoCurrencyEditText.setText("");
+        if (view.getId() == R.id.foriegn_EditText) {
+            if (!(mCryptoCurrencyEditText.getText().toString().equals(""))) {
+                mCryptoCurrencyEditText.setText("");
                 mCryptoCurrencyEditText.setHint(R.string.crypto_default_Text);
                 mCryptoAmountTextView.setText(R.string.crypto_default_Text);
                 mForeignAmountTextView.setText(bthForeignCurrencyString);
@@ -142,13 +142,13 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
         }
     }
 
-    public void clearText(View view){
+    public void clearText(View view) {
         mCryptoCurrencyEditText.setText("");
         mForeignCurrencyEditText.setText("");
         mCryptoCurrencyEditText.setHint(R.string.crypto_default_Text);
         mForeignCurrencyEditText.setHint(bthForeignCurrencyString);
-        mCryptoAmountTextView.setText(cryptoCurrencySymbol+" "+"1.00");
-        mForeignAmountTextView.setText(foreignCurrencySymbol+" "+bthForeignCurrencyString);
+        mCryptoAmountTextView.setText(cryptoCurrencySymbol + " " + "1.00");
+        mForeignAmountTextView.setText(foreignCurrencySymbol + " " + bthForeignCurrencyString);
 
     }
 }
