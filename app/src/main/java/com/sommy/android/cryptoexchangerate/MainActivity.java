@@ -54,22 +54,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mErrorTextView = (TextView) findViewById(R.id.error_textView);
         bundle.putString(COUNTRY_KEY, countryCode);
 
+        /*
+        Setting the dropdown list
+         */
         ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this, R.array.country_currency_array, android.R.layout.simple_spinner_item);
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, string);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(arrayAdapter);
 
+        /*
+        Setting the RecyclerView
+         */
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-
         mRecyclerView.setLayoutManager(layoutManager);
-
         mRecyclerView.setHasFixedSize(true);
-
         mCryptoAdapter = new CryptoAdapter(MainActivity.this, this);
         mRecyclerView.setAdapter(mCryptoAdapter);
     }
 
-    protected void onStart(){
+    /**
+     * This method start the content view if there is active network or send and error message if not.
+     */
+    protected void onStart() {
         super.onStart();
         getSupportLoaderManager().initLoader(CRYPTO_LOADER, bundle, this);
     }
@@ -77,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * This method will make the error message visible and hide the ListView.
      */
-    private void showErrorMessage(){
+    private void showErrorMessage() {
         mRecyclerView.setVisibility(View.INVISIBLE);
         mSpinner.setVisibility(View.INVISIBLE);
         mErrorTextView.setVisibility(View.VISIBLE);
@@ -93,6 +98,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mSpinner.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * This method is used to fetch for crypto currency compared to the country currency using the CryptoCompare.com API.
+     *
+     * @param id   The LoaderManager an ID
+     * @param args The bundle that will receive data from initialize loader.
+     * @return An AsyncTaskLoader that will return the Loader to the onLoadFinished method.
+     */
     @Override
     public Loader<String> onCreateLoader(int id, final Bundle args) {
         return new AsyncTaskLoader<String>(this) {
@@ -100,14 +112,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             String mCryptoJson;
 
             @Override
-            protected void onStartLoading(){
+            protected void onStartLoading() {
                 mSpinner.setVisibility(View.INVISIBLE);
                 mPbIndicator.setVisibility(View.VISIBLE);
-                if(null != mCryptoJson) {
+                if (null != mCryptoJson) {
                     deliverResult(mCryptoJson);
-                }else {
-                        forceLoad();
-                    }
+                } else {
+                    forceLoad();
+                }
             }
 
             @Override
@@ -157,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 ethereum = jsonObject.getJSONObject("ETH");
                 countryBitcoin = bitcoin.getString(countryCode);
                 countryEthereum = ethereum.getString(countryCode);
-//                Toast.makeText(this, countryBitcoin+countryEthereum+countryCode, Toast.LENGTH_SHORT).show();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -185,14 +196,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    /**
+     * if an item is clicked in the drop down list it launches you to the particular currency of the country currency
+     *
+     * @param adapterView
+     * @param view
+     * @param i           position of item
+     * @param l
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         countryCode = adapterView.getItemAtPosition(i).toString();
         mRecyclerView.setVisibility(View.INVISIBLE);
         bundle.putString(COUNTRY_KEY, countryCode);
         getSupportLoaderManager().restartLoader(CRYPTO_LOADER, bundle, this);
-//        Toast.makeText(this, countryCode, Toast.LENGTH_SHORT).show();
-        switch (countryCode){
+
+//        Passing symbols value to each variable
+        switch (countryCode) {
             case "NGN":
                 foreignCurrencySymbols = "₦";
                 break;
@@ -253,8 +273,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             case "INR":
                 foreignCurrencySymbols = "₹";
                 break;
-                default:
-                    foreignCurrencySymbols = "";
+            default:
+                foreignCurrencySymbols = "";
         }
     }
 
@@ -263,6 +283,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    /**
+     * If an item is clicked, it launches you to the child class(Conversation.java).
+     * and it passes some info with the use of intent.
+     *
+     * @param strings The conversion of crypto currency to country currency data to be displayed.
+     */
     @Override
     public void onClick(String[] strings) {
         Intent startConversationActvityIntent = new Intent(MainActivity.this, Conversation.class);
@@ -270,7 +296,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         startActivity(startConversationActvityIntent);
 
-        Log.i(TAG, strings[0]+", "+strings[1]);
+        Log.i(TAG, strings[0] + ", " + strings[1]);
     }
 
     /**
@@ -287,14 +313,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         showCryptoDataView();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    /**
+     * Adding Refresh menu
+     *
+     * @param menu
+     * @return
+     */
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.index, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    public boolean onOptionsItemSelected(MenuItem menuItem){
+    /**
+     * Adding Refresh menuItem
+     *
+     * @param menuItem
+     * @return
+     */
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
         int itemThatWasSelected = menuItem.getItemId();
-        if(itemThatWasSelected == R.id.action_refresh) {
+        if (itemThatWasSelected == R.id.action_refresh) {
             invalidateData();
             bundle.putString(COUNTRY_KEY, countryCode);
             getSupportLoaderManager().restartLoader(CRYPTO_LOADER, bundle, this);

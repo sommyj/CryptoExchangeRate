@@ -18,16 +18,17 @@ public final class NetworkUtils {
 
     private final static String CRYPTO_BASE_URL = "https://min-api.cryptocompare.com/data/pricemulti" +
             "?fsyms=BTC,ETH&tsyms=NGN,NGR,USD,EUR,GBP,CNY,JPY,RUB,CNH,AUD,INR,CAD,BRL,SEK,GHS,ZAR,MXN,KRW,NZD,HKD";
-//    private final static  String QUERY_PARAM = "q";
-//    private final static String queryValue = "location:lagos+language:java";
+    String countryCurrency;
+//    private final static  String QUERY_PARAM = "tsyms";
+//    private final static String queryValue = "countryCurrency";
 
     /**
-     * Builds the URL used to query Github
+     * Builds the URL used to query CryptoCompare
      *
-     * @return The URL to use to query the github server.
+     * @return The URL to use to query the CryptoCompare server.
      */
     public static URL buildUrl(){
-//        Uri builtUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
+//        Uri builtUri = Uri.parse(CRYPTO_BASE_URL).buildUpon()
 //                .appendQueryParameter(QUERY_PARAM, queryValue)
 //                .build();
 

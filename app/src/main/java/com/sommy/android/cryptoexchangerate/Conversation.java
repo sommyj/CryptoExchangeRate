@@ -55,6 +55,10 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
         mCryptoCurrencySymbolTextView = (TextView) findViewById(R.id.cryptoSymbol_TextView);
         mClearButton = (Button) findViewById(R.id.clear_button);
 
+        /*
+          This intent retrieves the crypto values, country values and crypto image url from the
+          parent class(MainActivity.java) in an array of String.
+         */
         Intent intentThatStartedThisActivity = getIntent();
 
         if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
@@ -72,8 +76,6 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
             mForeignCurrencyEditText.setHint(bthForeignCurrencyString);
         }
 
-//        getActionBar().setIcon(cryptoCurrencyImage);
-
         mForeignCurrencyEditText.setOnFocusChangeListener(this);
         mForeignCurrencyEditText.addTextChangedListener(this);
         mCryptoCurrencyEditText.addTextChangedListener(this);
@@ -89,6 +91,11 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
 
     }
 
+    /**
+     * implenting after change listener action
+     *
+     * @param editable
+     */
     @Override
     public void afterTextChanged(Editable editable) {
         Double foreignAmount = 0.0;
@@ -129,6 +136,12 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
 
     }
 
+    /**
+     * implementing onFocuschange listener
+     *
+     * @param view
+     * @param b
+     */
     @Override
     public void onFocusChange(View view, boolean b) {
         if (view.getId() == R.id.foriegn_EditText) {
@@ -142,6 +155,11 @@ public class Conversation extends AppCompatActivity implements TextWatcher, View
         }
     }
 
+    /**
+     * Clearing the Edit text
+     *
+     * @param view
+     */
     public void clearText(View view) {
         mCryptoCurrencyEditText.setText("");
         mForeignCurrencyEditText.setText("");
