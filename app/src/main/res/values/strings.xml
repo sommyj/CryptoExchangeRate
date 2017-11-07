@@ -1,13 +1,16 @@
 <resources>
     <!--mainActivity page-->
     <string name="app_name">"Crypto Exchange Rate "</string>
-    <string name="default_text">TextView</string>
     <string name="error_message">
         Failed to get results. Please try again.
     </string>
+
+    <!--CryptoAdapter-->
+    <string name="default_text">TextView</string>
     <string name="crypto_currency">Crypto currency</string>
     <string name="crypto_currency_image">Crypto Currency image</string>
-    <string name="next_sign">Next Sign</string>
+    <string name="forward_sign">Forward Sign</string>
+    <string name="back_sign">Back Sign</string>
 
     <!--Coversation page-->
     <string name="foreign_label">Please enter a foreign currency amount</string>

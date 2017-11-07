@@ -78,6 +78,12 @@ class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoAdapterView
         holder.mTextView1.setText(cryptoName.get(position));
         holder.mImageView.setImageResource(currencyImage.get(position));
         holder.mTextView2.setText(foreignCurrencySymbols+" " + currencyAmount.get(position));
+        if (position == getItemCount() - 1) {
+            holder.mForwardImageView.setVisibility(View.INVISIBLE);
+        }
+        if (position == 0) {
+            holder.mBackImageView.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**
@@ -130,12 +136,16 @@ class CryptoAdapter extends RecyclerView.Adapter<CryptoAdapter.CryptoAdapterView
         private final TextView mTextView1;
         private final ImageView mImageView;
         private final TextView mTextView2;
+        private final ImageView mForwardImageView;
+        private final ImageView mBackImageView;
 
         CryptoAdapterViewHolder(View itemView) {
             super(itemView);
             this.mTextView1 = itemView.findViewById(R.id.crypto_name);
             this.mImageView = itemView.findViewById(R.id.crypto_imageView);
             this.mTextView2 = itemView.findViewById(R.id.dollar_textView);
+            this.mForwardImageView = itemView.findViewById(R.id.forward_imageView);
+            this.mBackImageView = itemView.findViewById(R.id.back_imageView);
 
             itemView.setOnClickListener(this);
         }
